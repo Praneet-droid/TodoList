@@ -1,4 +1,4 @@
-import { createSlice, nanoid, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice,  createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
   todos: [
@@ -23,9 +23,10 @@ export const createTodo = createAsyncThunk(
       const response = await fetch("http://localhost:8000/todos", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json",    
         },
         body: JSON.stringify({ text, createdBy }),
+         credentials: 'include'
       });
 
       const data = await response.json();
@@ -44,7 +45,7 @@ export const deleteTodo= createAsyncThunk("todos/deleteTodo",
         headers:{
           "Content-Type":"application/json",
         },
-        
+        credentials: 'include'
       })
  
       const data = await response.json();
@@ -63,20 +64,11 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    addTodo(state, action) {
-      const todo = {
-        id: nanoid(),
-        text: action.payload,
-        isTodoEditable: false,
-      };
-      state.todos.push(todo);
-    },
+ 
     setUserId(state, action) {
    
       state.userId = action.payload;
     },
-
-   
 
     updateTodo(state, action) {
       const { id, text } = action.payload;
@@ -90,5 +82,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { addTodo, updateTodo, setUserId } = authSlice.actions;
+export const {  updateTodo, setUserId } = authSlice.actions;
 export default authSlice.reducer;

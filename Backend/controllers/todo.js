@@ -17,7 +17,7 @@ const handleCreateTodo=async (req, res) => {
   
     try {
       const todos = await todoListSchema.find({ createdBy: userId });
-      console.log(todos)
+    
       res.status(200).json(todos);
     } catch (error) {
       console.error('Error fetching todos:', error);
