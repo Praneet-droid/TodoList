@@ -60,6 +60,35 @@ export const deleteTodo= createAsyncThunk("todos/deleteTodo",
   }
 )
 
+export const updateTodo= createAsyncThunk("todos/updateTodo",
+  async (newTodo,thunkAPI) =>{
+    
+    const {id,text}=newTodo;
+   console.log(id)
+    if(text==="")return null;
+    
+    try{
+      const response=await fetch(`http://localhost:8000/todos/${id}`,{
+        method:"PATCH",
+        headers:{
+          "Content-Type":"application/json",
+        },
+        body: JSON.stringify({text}),
+        credentials: 'include'
+      })
+ 
+      const data = await response.json();
+
+      return data;
+    }
+    catch(error){
+      return thunkAPI.rejectWithValue({ error: error.message });
+
+
+    }
+  }
+)
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -68,19 +97,11 @@ const authSlice = createSlice({
     setUserId(state, action) {
    
       state.userId = action.payload;
-    },
+    }
 
-    updateTodo(state, action) {
-      const { id, text } = action.payload;
-
-      const todo = state.todos.find((todo) => todo.id === id);
-
-      if (todo) {
-        todo.text = text;
-      }
-    },
+   
   },
 });
 
-export const {  updateTodo, setUserId } = authSlice.actions;
+export const {setUserId } = authSlice.actions;
 export default authSlice.reducer;

@@ -6,7 +6,7 @@ const app = express();
 const router=express.Router()
 const {handleSignUp,handleLogin}=require('../controllers/user')
 const {restrictedLoginUserOnly}=require('../middlewares/auth')
-const {handleDeleteTodo,handleGetUser,handleCreateTodo}=require('../controllers/todo')
+const {handleDeleteTodo,handleGetUser,handleCreateTodo,handleUpdateTodo}=require('../controllers/todo')
 
 
 app.use(cookieParser());
@@ -19,6 +19,7 @@ router.post("/todos",restrictedLoginUserOnly,handleCreateTodo);
 
   router.get('/todos/:userId',handleGetUser )
   router.delete("/todos/:Id",handleDeleteTodo)
+  router.patch("/todos/:Id",handleUpdateTodo)
   
   
   module.exports=router;

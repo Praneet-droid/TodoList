@@ -1,6 +1,6 @@
 
 const todoListSchema=require('../models/todoSchema')
-
+const { ObjectId } = require('mongodb');
 const handleCreateTodo=async (req, res) => {
     const { text,createdBy } = req.body;
    
@@ -36,4 +36,24 @@ const handleCreateTodo=async (req, res) => {
     }
     res.status(200).json({ message: 'Todo deleted successfully', deleteTodo });
   }
-  module.exports={handleDeleteTodo,handleGetUser,handleCreateTodo}
+
+  const handleUpdateTodo= async(req,res)=>{
+
+    const id=req.params.Id;
+    
+    const {text}=req.body;
+    
+    
+    
+    const updateTodo= await todoListSchema.updateOne(
+      { _id: id },
+      { $set: { text: text } }
+    );
+    console.log(updateTodo)
+    if(!updateTodo)
+    {
+      res.status(500).json({error:"Updation Failed"})
+    }
+    res.status(200).json({message:"Update SuccessFull"})
+  }
+  module.exports={handleDeleteTodo,handleGetUser,handleCreateTodo,handleUpdateTodo}

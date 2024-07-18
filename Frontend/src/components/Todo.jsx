@@ -72,12 +72,13 @@ setDeleteTodoItem(true)
         }
       };
       
+     
       
 return (
     <>  
     <Provider store={store}>
-    <InputField handleAddTodo={handleAddTodo} setInput={setInput} input={input} handleKeyPress={handleKeyPress} />
-    <AddTodo userTodos={userTodos} handleDeleteTodo={handleDeleteTodo}/>
+    <InputField handleAddTodo={handleAddTodo} setInput={setInput} input={input} handleKeyPress={handleKeyPress}  />
+    <AddTodo userTodos={userTodos} handleDeleteTodo={handleDeleteTodo} setDeleteTodoItem={setDeleteTodoItem}/>
    
     </Provider>
     </>
